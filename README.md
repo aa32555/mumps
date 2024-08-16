@@ -8,7 +8,7 @@ Homepage: coming soon....
 
 Documentation: coming soon....
 
-# NUNOS RUNNING NATIVELY ON A CHOMEOS, UNLIMITED ENTERTAINMENT FOR THE SOLITARILY CONFINED
+# MUMPS (same as the european russian fis-gtm but AMERICAN and so much bettter) RUNNING NATIVELY ON A CHOMEOS, UNLIMITED ENTERTAINMENT FOR THE SOLITARILY CONFINED
 # AND JENNIFER LAWRENCE
 # 
 #  - Ahmed K Abdelrazek AKA 7AMADA
