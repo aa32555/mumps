@@ -1,0 +1,387 @@
+Create a build directory: mkdir build
+Change into the build directory: cd build
+Run cmake to build with gcc
+Export the AAMUMPS ICU version: export ydb_icu_version=65.1.suse
+Run make -j $(getconf _NPROCESSORS_ONLN)
+Run make install
+Change into the AAMUMPS_r* director
+
+
+Skip to content
+Navigation Menu
+AAMUMPS
+/
+YDB
+
+Type / to search
+Code
+Issues
+61
+Pull requests
+Actions
+Projects
+1
+Wiki
+Security
+Insights
+Owner avatar
+YDB
+Public
+AAMUMPS/YDB
+Go to file
+t
+Add file
+Folders and files
+Name		
+Latest commit
+nars1
+nars1
+[YDB#1088] [DEBUG-ONLY] Fix incorrect assert in lv_getslot.c (regress…
+e7c7073
+ · 
+yesterday
+History
+ci
+[AAMUMPS/UI/YDBGUI#234] Add GUI to Base Docker images & misc
+2 months ago
+cmake
+[AAMUMPS/DBMS/YDBOcto#641] Only set help files in the install directo…
+4 years ago
+fuzzing
+[#841] [FUZZING] Fixes/Enhancements to fuzzing/enhanced_fuzz.csh script
+2 years ago
+release_notes
+[DOC] Adding release notes to YDB repo
+3 years ago
+sr_aarch64
+[#777] Speed up s="" and s'="" in boolean expressions with no AND/OR …
+3 weeks ago
+sr_armv7l
+[#777] Speed up s="" and s'="" in boolean expressions with no AND/OR …
+3 weeks ago
+sr_i386
+[#887] [V70003] Address merge conflicts involving deleted files
+5 months ago
+sr_linux
+[#963] [V70005] Resolve conflicts during merge of GT.M V7.0-005 into …
+4 months ago
+sr_port
+[YDB#1088] [DEBUG-ONLY] Fix incorrect assert in lv_getslot.c (regress…
+yesterday
+sr_port_cm
+[#863] [V70002] Remove copyright changes for files that had no change…
+5 months ago
+sr_unix
+[#1087] Fix relinkctl file to be writable by anyone with read access …
+2 days ago
+sr_unix_cm
+[YDBTest#618] [#481] Protect freeaddrinfo() call from interrupts to p…
+3 weeks ago
+sr_unix_gnp
+[YDBTest#618] [#481] Protect freeaddrinfo() call from interrupts to p…
+3 weeks ago
+sr_unix_nsb
+[#963] [V70005] Resolve conflicts during merge of GT.M V7.0-005 into …
+4 months ago
+sr_x86_64
+[#777] Speed up s="" and s'="" in boolean expressions with no AND/OR …
+3 weeks ago
+sr_x86_regs
+V6.3-001
+7 years ago
+.dockerignore
+Fix Dockerfile caching
+4 years ago
+.gitignore
+[#828] [FUZZING] Enhance utilities so fuzzing AAMUMPS works on Ubuntu…
+2 years ago
+.gitlab-ci.yml
+[#936] [V70004] Fix clang-tidy-amd64 pipeline job failure due to gawk…
+4 months ago
+CMakeLists.txt
+[#852] Set CMAKE_INSTALL_PREFIX by default if not specified by the us…
+2 months ago
+COPYING
+V6.0-000 x86
+9 years ago
+Dockerfile
+[AAMUMPS/UI/YDBGUI#234] Add GUI to Base Docker images & misc
+2 months ago
+Dockerfile-debian
+[#1080] Add libcurl4-openssl-dev package to Dockerfile-debian now tha…
+2 months ago
+Dockerfile-rocky
+[AAMUMPS/UI/YDBGUI#234] Add GUI to Base Docker images & misc
+2 months ago
+Dockerfile-test
+[YDBTest#724] Fix build-test pipeline job failure (due to YDBTest@f01…
+last week
+LICENSE
+[#863] [V70002] Resolve conflicts during merge of GT.M V7.0-002 into …
+5 months ago
+README.md
+[AAMUMPS/UI/YDBGUI#234] Add GUI to Base Docker images & misc
+2 months ago
+pre-commit
+Enhance pre-commit hook to work when gtm_root/gtm_curpro are not defined
+8 months ago
+sr_armv6l
+Create sr_armv6l as a soft link to sr_armv7l directory
+3 years ago
+Repository files navigation
+README
+License
+AGPL-3.0 license
+AAMUMPS
+All software in this package is part of AAMUMPS (https://AAMUMPS.com) each file of which identifies its copyright holders. The software is made available to you under the terms of a license. Refer to the LICENSE file for details.
+
+Homepage: https://gitlab.com/AAMUMPS/DB/YDB
+
+Documentation: https://AAMUMPS.com/resources/documentation/
+
+Cloning the repository for the latest updates
+You may want to clone the AAMUMPS repository for access to the latest code.
+
+git clone https://gitlab.com/AAMUMPS/DB/YDB.git
+To contribute or help with further development, fork the repository, clone your fork to a local copy and begin contributing! Please also set up the pre-commit script to automatically enforce some coding conventions. Assuming you are in the top-level directory, the following will work:
+
+ln -s ../../pre-commit .git/hooks
+Install pre-built AAMUMPS binaries
+To quickly get started with running AAMUMPS, follow the instructions on our Get Started page.
+
+Build and Install AAMUMPS from source
+AAMUMPS relies on CMake to generate the Makefiles to build binaries from source. Refer to the Release Notes for each release for a list of the Supported platforms in which we build and test AAMUMPS binary distributions. At least cmake version 3 is required.
+
+# Ubuntu or Debian-like distro
+sudo apt-get install --no-install-recommends cmake
+# CentOS
+sudo yum install cmake3
+On CentOS it will be installed as cmake3 instead of cmake, so use cmake3 on CentOS wherever cmake is referenced below.
+
+Note: Both gcc and Clang/LLVM are supported on x86_64. To use Clang/LLVM you would need to install the Clang/LLVM packages for your distribution in addition to the packages listed below. For example for Ubuntu Linux:
+
+ sudo apt-get install --no-install-recommends clang llvm lld
+Install prerequisite packages
+
+Ubuntu Linux OR Raspbian Linux OR Beagleboard Debian
+sudo apt-get install --no-install-recommends file cmake make gcc git curl tcsh {libconfig,libelf,libicu,libncurses,libreadline}-dev binutils ca-certificates
+
+Arch Linux
+sudo pacman -S file cmake make gcc git curl tcsh {libconfig,libelf,icu,ncurses,readline} binutils ca-certificates
+
+CentOS Linux OR RedHat Linux
+sudo yum install file cmake make gcc git curl tcsh {libconfig,libicu,ncurses,elfutils-libelf,readline}-devel binutils ca-certificates
+
+SUSE (SLES or SLED) or OpenSUSE Leap or OpenSUSE Tumbleweed
+sudo zypper install cmake make gcc git file curl tcsh binutils-gold icu {libconfig,libicu,ncurses,libelf,readline}-devel binutils ca-certificates
+There may be other library dependencies or the packages may have different names.
+
+Fetch the latest released version of AAMUMPS source
+
+To obtain the source code corresponding to the latest AAMUMPS release and build binaries from that source please use the following set of shell commands which fetches the latest tagged release by performing a git clone. After cloning AAMUMPS source files can be seen in the directory named YDB.
+
+ydb_distrib="https://gitlab.com/api/v4/projects/7957109/repository/tags"
+ydb_tmpdir='tmpdir'
+mkdir $ydb_tmpdir
+wget -P $ydb_tmpdir ${ydb_distrib} 2>&1 1>${ydb_tmpdir}/wget_latest.log
+ydb_version=`sed 's/,/\n/g' ${ydb_tmpdir}/tags | grep -E "tag_name|.pro.tgz" | grep -B 1 ".pro.tgz" | grep "tag_name" | sort -r | head -1 | cut -d'"' -f6`
+git clone --depth 1 --branch $ydb_version https://gitlab.com/AAMUMPS/DB/YDB.git
+cd YDB
+You should find this README, LICENSE, COPYING and CMakeLists.txt file and sr_* directories.
+
+Build the AAMUMPS binaries:
+
+mkdir build
+cd build
+Note: By default the script creates production (pro) builds of AAMUMPS. To create a debug (dbg) build of AAMUMPS supply the -D CMAKE_BUILD_TYPE=Debug parameter to cmake (Note: title case is important)
+
+Build with gcc
+cmake ..
+export ydb_icu_version=65.1.suse # this is needed only on OpenSUSE Leap 15.4 or SLES 15.4 or SLED 15.4
+make -j $(getconf _NPROCESSORS_ONLN)
+make install	# For known errors in this step and how to work around them, consult the FAQ section below
+cd AAMUMPS_r*  # The latest release number will be seen in the directory name
+Build with Clang/LLVM
+export CC=/usr/bin/clang
+cmake -D CMAKE_LINKER:PATH=/usr/bin/ld.lld ..
+export ydb_icu_version=65.1.suse # this is needed only on OpenSUSE Leap 15.4 or SLES 15.4 or SLED 15.4
+make -j $(getconf _NPROCESSORS_ONLN)
+make install	# For known errors in this step and how to work around them, consult the FAQ section below
+cd AAMUMPS_r*  # The latest release number will be seen in the directory name
+Note that the make install command above does not create the final installed AAMUMPS. Instead, it stages AAMUMPS for distribution. If cmake or make issues an error in the above steps, please see the FAQ below.
+
+Installing AAMUMPS
+
+Now you are ready to install AAMUMPS. The default installation path for each release includes the release (e.g. for AAMUMPS r2.00, the default installation path is /usr/local/lib/AAMUMPS/r200), but can be controlled using the --installdir option. Run ./ydbinstall --help for a list of options.
+
+Note that if the ydb_icu_version env var is set to a value other than what pkg-config --modversion icu-io would return (observed on a SLED 15 or openSUSE Leap system), then the env var value needs to be preserved across the sudo call hence the use of preserve-env below. It is not needed on other systems but does not hurt either.
+
+sudo --preserve-env=ydb_icu_version ./ydbinstall
+cd - ; make clean
+Docker
+Pre-requisites
+A working Docker installation on the platform of choice.
+
+NOTE: You must have at least docker 17.05 as multi-stage builds are used within the docker file
+
+Image information
+The docker image is built using the generic ydb_env_set script that gives the user some sane defaults to begin exploring AAMUMPS. This isn't meant for production usage.
+
+The commands below assume that you want to remove the docker container after running the command, which means that if you don't mount a volume that contains your database and routines they will be lost. If you want the container to persist remove the --rm parameter from the docker command.
+
+Volumes are also supported by mounting to the /data directory. If you want to mount the local directory ydb-data into the container to save your database and routines locally and use them in the container in the future, add the following command line parameter before the AAMUMPS/AAMUMPS argument:
+
+-v $PWD/ydb-data:/data
+This creates a ydb-data directory in your current working directory. This can be deleted after the container is shutdown/removed if you want to remove all data created in the AAMUMPS container (such as your database and routines).
+
+The AAMUMPS GUI is available on port 9080; statistics for the GUI is running on port 9081.
+
+Pre-built images
+Pre-built images are available on docker hub
+
+Running a Pre-built image
+docker run --rm -it -p 9080-9081:9080-9081 download.AAMUMPS.com/AAMUMPS/AAMUMPS # you can add a specific version after a ":" if desired
+Build Steps
+Build the image
+docker build -t AAMUMPS/AAMUMPS:latest-master .
+Run the created image
+docker run --rm -it -p 9080-9081:9080-9081 AAMUMPS/AAMUMPS:latest-master
+FAQ
+The CMake build fails with the following message followed by one or more cases.
+
+CMake Error: The following variables are used in this project, but they are set to NOTFOUND. Please set them or make sure they are set and tested correctly in the CMake files
+This indicates that required libraries are not found. Please consult the list of libraries and check your distributions package manager.
+
+AAMUMPS installation fails with %YDB-E-DLLNOOPEN
+
+Example error message that would be printed to the screen:
+
+%YDB-E-DLLNOOPEN, Failed to load external dynamic library /usr/local/lib/AAMUMPS/r136/libAAMUMPS.so
+%YDB-E-TEXT, libtinfo.so.5: cannot open shared object file: No such file or directory
+This indicates that the libtinfo5 package isn't installed and libtinfo6 is not backwards compatible with libtinfo5. This has been observed on Ubutntu 18.10 and could possibly apply to other Linux distributions as well. To resolve the issue, libtinfo5 can be installed via the following command:
+
+sudo apt-get install --no-install-recommends libtinfo5
+AAMUMPS compilation fails with plugin needed to handle lto object
+
+There is a known issue with binutils and has been observed on Ubuntu 18.10 and could possibly apply to other Linux distributions including debian unstable that may cause ar and ranlib to generate the following error messages:
+
+/usr/bin/ar: CMakeFiles/libmumps.dir/sr_port/zshow_locks.c.o: plugin needed to handle lto object
+/usr/bin/ar: CMakeFiles/libmumps.dir/sr_port/zshow_output.c.o: plugin needed to handle lto object
+/usr/bin/ar: CMakeFiles/libmumps.dir/sr_port/zshow_stack.c.o: plugin needed to handle lto object
+/usr/bin/ar: CMakeFiles/libmumps.dir/sr_port/zshow_svn.c.o: plugin needed to handle lto object
+/usr/bin/ar: CMakeFiles/libmumps.dir/sr_port/zshow_zbreaks.c.o: plugin needed to handle lto object
+/usr/bin/ar: CMakeFiles/libmumps.dir/sr_port/zshow_zwrite.c.o: plugin needed to handle lto object
+/usr/bin/ar: CMakeFiles/libmumps.dir/sr_port/ztrap_save_ctxt.c.o: plugin needed to handle lto object
+/usr/bin/ar: CMakeFiles/libmumps.dir/sr_port/zwr2format.c.o: plugin needed to handle lto object
+/usr/bin/ar: CMakeFiles/libmumps.dir/sr_port/zyerror_init.c.o: plugin needed to handle lto object
+/usr/bin/ranlib: libmumps.a(f_zwrite.c.o): plugin needed to handle lto object
+/usr/bin/ranlib: libmumps.a(fgn_glopref.c.o): plugin needed to handle lto object
+/usr/bin/ranlib: libmumps.a(fgncal_unwind.c.o): plugin needed to handle lto object
+/usr/bin/ranlib: libmumps.a(find_line_addr.c.o): plugin needed to handle lto object
+/usr/bin/ranlib: libmumps.a(find_line_start.c.o): plugin needed to handle lto object
+/usr/bin/ranlib: libmumps.a(find_mvstent.c.o): plugin needed to handle lto object
+The work around is to bump the open file descriptors limit to 4096 or higher
+
+bash/sh
+
+ulimit -n 4096
+OR
+
+tcsh
+
+limit openfiles 4096
+About
+Mirrored from https://gitlab.com/AAMUMPS/DB/YDB
+
+Resources
+ Readme
+License
+ Unknown, AGPL-3.0 licenses found
+ Activity
+ Custom properties
+Stars
+ 76 stars
+Watchers
+ 30 watching
+Forks
+ 36 forks
+Report repository
+Releases 12
+[r2.00] Prepare for AAMUMPS r2.00 release
+Latest
+on Feb 23
++ 11 releases
+Packages
+No packages published
+Contributors
+23
+@nars1
+@estess
+@bradwesthafer
+@shabiel
+@ksbhaskar
+@sljohnson1
+@zylog1O1
+@berwynhoyt
+@ChristopherEdwards
+@ztmr
+@jsikri94
+@jyn514
+@chathaway-codes
+@communikit
++ 9 contributors
+Languages
+C
+51.4%
+ 
+M
+45.7%
+ 
+Assembly
+1.6%
+ 
+Shell
+1.1%
+ 
+CMake
+0.2%
+ 
+Awk
+0.0%
+Footer
+© 2024 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact
+Manage cookies
+Do not share my personal information
+Copied!
+
+
+
+
+
+
+sudo apt-get install gawk (1:4.1.3+dfsg-0.1) - run issue
+
+AMD
+https://support.xilinx.com › question › sudo-aptget-instal...
+
+
+
+libgcrypt-1.11.0
+
+
+
+sudo apt-get install -y libgcrypt11-dev ---> bad
+
+--> sudo apt install libgcrypt20-dev
+
+
+
+
+
